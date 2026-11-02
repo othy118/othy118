@@ -34,7 +34,7 @@
 
 **📊 Data Analytics & BI**
 
-Automated reporting pipelines, KPI dashboards and scenario models for management decisions.
+Automated reporting pipelines, KPI dashboards, payment tracking and scenario models for management decisions.
 
 `SQL` `Python` `Power BI` `DAX` `Excel VBA` `SAP`
 
@@ -80,6 +80,73 @@ MSc thesis. Edge agents exchange **compressed states** (8-bit quantization, sele
 
 ---
 
+### 💼 Professional work (code private, built at Sygma Africa Maroc)
+
+| Tool | Problem solved | Stack |
+|---|---|---|
+| **Payment & billing tracking platform** | Tracks every payment and invoice end-to-end and powers revenue analysis and scenario forecasting for management. Started as an Excel VBA tool, then rebuilt as a web app | Excel VBA → Flask · SQL |
+| **End-of-contract settlement calculator** | Batch settlement for 52+ employees across 3 legal scenarios, **226K+ MAD** savings identified | Python · Gradio |
+| **Payslip PDF extractor** | Turns payslip PDFs into structured data for payroll checks | Python · pdfplumber · Flask |
+| **Contract data extractor** | Parses 3 different contract PDF formats with cascading regex | Python · Regex |
+| **Bank transfer file generator** | Builds bank wire files with mod-97 RIB validation, 60+ Moroccan bank codes | Python |
+| **HR database & cost tracker** | Replaced fragile Excel files with a database app | Flask · SQLite · Tkinter |
+| **Reporting automation** | Monthly reporting pipeline, **−60% processing time** | Python · SQL · Power BI |
+
+---
+
+### 🔬 Technical deep-dive: CoKnight 2.0
+
+```mermaid
+flowchart LR
+    E[LunarLander-v2<br/>8-dim state] --> A[Edge agent<br/>ε-greedy policy]
+    A --> C{Compression}
+    C -->|Q| Q[8-bit quantization<br/>scale + offset]
+    C -->|F| F[Selective transmission<br/>α·max abs threshold]
+    C -->|Q+F| H[6-bit + masking]
+    Q --> S[Edge server<br/>DQN 8→128→256→4]
+    F --> S
+    H --> S
+    S -->|Q-values / action| A
+    S --> R[(Replay buffer<br/>100k)]
+    R -->|batch 256, AdamW, MSE TD| S
+```
+
+<details>
+<summary><b>Method, hyperparameters & results</b></summary>
+
+<br/>
+
+| Component | Choice |
+|---|---|
+| Algorithm | Deep Q-Network with experience replay |
+| Network | MLP 8 → 128 → 256 → 4, ReLU |
+| Optimizer | AdamW, lr 3e-4, MSE temporal-difference loss |
+| Exploration | ε-greedy 1.0 → 0.05, decay 0.995 |
+| Training | 2,200 episodes, γ = 0.99, batch 256, buffer 100k |
+| Evaluation | 50 test episodes per compression strategy |
+
+| Strategy | Avg. reward | Success | Bandwidth saved |
+|---|:---:|:---:|:---:|
+| 8-bit quantization | 199.2 | 90% | **87.5%** |
+| Selective transmission | 187.2 | 92% | 80.7% |
+| 6-bit + masking | 128.3 | 76% | 55.1% |
+
+**Finding:** quantization keeps almost all decision-relevant information. Hybrid schemes fail when filtered features are
+re-packed (positional information is lost), so masking must preserve the feature layout.
+
+</details>
+
+---
+
+### ⚙️ Engineering practices
+
+- **Pipelines & automation**: Python/SQL ETL replacing manual monthly reporting; PDF extraction (pdfplumber, regex cascades over 3 formats); bank-file generation with mod-97 validation
+- **Apps & APIs**: Flask web apps on SQL databases, Gradio calculators, FastAPI serving
+- **Cloud & delivery**: AWS · Snowflake · Databricks; CI/CD with GitHub Actions and Jenkins
+- **ML workflow**: reproducible notebooks, fixed evaluation protocol (50 test episodes), ablation across strategies
+
+---
+
 ### 🛠️ Tech stack
 
 <div align="center">
@@ -108,4 +175,3 @@ MSc thesis. Edge agents exchange **compressed states** (8-bit quantization, sele
 </div>
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:2F81F7,50:1F4E79,100:0D1117&height=110&section=footer" width="100%" alt="" />
-
