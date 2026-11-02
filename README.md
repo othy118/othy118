@@ -108,3 +108,4 @@ MSc thesis. Edge agents exchange **compressed states** (8-bit quantization, sele
 </div>
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:2F81F7,50:1F4E79,100:0D1117&height=110&section=footer" width="100%" alt="" />
+
