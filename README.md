@@ -16,11 +16,12 @@ I turn messy operational data into automated pipelines, dashboards and decisions
 
 ## 🛠️ Tech stack
 
-**Data & BI** — SQL · Python (Pandas, NumPy) · Power BI (DAX, Power Query) · Excel/VBA · R · SAP
-**ML / DL / RL** — scikit-learn · XGBoost · PyTorch · Transformers · Deep Q-Networks · Computer Vision · NLP
-**Engineering** — AWS · Snowflake · Databricks · GitHub Actions · Jenkins · Flask · FastAPI · Gradio · Linux
+- **Data & BI** — SQL · Python (Pandas, NumPy) · Power BI (DAX, Power Query) · Excel/VBA · R · SAP
+- **ML / DL / RL** — scikit-learn · XGBoost · PyTorch · Transformers · Deep Q-Networks · Computer Vision · NLP
+- **Engineering** — AWS · Snowflake · Databricks · GitHub Actions · Jenkins · Flask · FastAPI · Gradio · Linux
 
 ## 📫 Contact
 
 [LinkedIn](https://www.linkedin.com/in/othmanealaoui) · othmanealaoui926@gmail.com
 Languages: Arabic · French · English
+
